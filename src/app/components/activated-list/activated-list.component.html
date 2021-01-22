@@ -1,1 +1,88 @@
-<p>activated-list works!</p>
+<p *ngIf="!isPosts&&!isPhotos&&!isUsers">Activate something!</p>
+
+<div *ngIf="isPosts">
+  <h3>Activated posts</h3>
+  <table mat-table [dataSource]="postsSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="body">
+      <th mat-header-cell *matHeaderCellDef> Body </th>
+      <td mat-cell *matCellDef="let element"> {{element.body}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="postsDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: postsDisplayedColumns;"></tr>
+  </table>
+</div>
+
+<div *ngIf="isPhotos">
+  <h3>Activated photos</h3>
+  <table mat-table [dataSource]="photosSource" multiTemplateDataRows class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element">
+        <div class="element-detail"
+             [@detailExpand]="element == expandedPhotoElement ? 'expanded' : 'collapsed'">
+          <div class="element-url">
+            <img class="url-img" [src]="element.url" alt="">
+            <p>Image</p>
+          </div>
+          <div class="element-thumbnail-url">
+            <img class="thumbnail-url-img" [src]="element.thumbnailUrl" alt="">
+            <p>Thumbnail image</p>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="photosDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: photosDisplayedColumns;"
+        class="element-row"
+        [class.expanded-row]="expandedPhotoElement === element"
+        (click)="expandedPhotoElement = expandedPhotoElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  </table>
+</div>
+
+<div *ngIf="isUsers">
+  <h3>Activated users</h3>
+  <table mat-table [dataSource]="usersSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef> Username </th>
+      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="company">
+      <th mat-header-cell *matHeaderCellDef> Company </th>
+      <td mat-cell *matCellDef="let element"> {{element.company.name}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="usersDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: usersDisplayedColumns;"></tr>
+  </table>
+</div>
+
