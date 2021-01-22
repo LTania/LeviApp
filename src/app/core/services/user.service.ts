@@ -12,9 +12,6 @@ export class UserService {
   constructor( private http: HttpClient) { }
 
   getUserList(): Observable<UserModel[]>{
-    return this.http.get<UserModel[]>(  `https://jsonplaceholder.typicode.com/users`)
-      .pipe(
-        map( data => data.slice(0, 10)
-        ));
+    return this.http.get<UserModel[]>(  `https://jsonplaceholder.typicode.com/users?_start=0&_limit=10`);
   }
 }

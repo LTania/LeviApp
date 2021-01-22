@@ -22,6 +22,8 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   expandedElement: PhotoModel | null;
   dataSource: MatTableDataSource<unknown>;
   displayedColumns: string[] = ['title', 'action'];
+  activatedPhotos = [];
+  activatedPhotosId = [];
   private destroy$ = new Subject();
 
   constructor(private photoService: PhotoService) {}
@@ -35,6 +37,12 @@ export class PhotoListComponent implements OnInit, OnDestroy {
         },
         err => console.log(err)
       );
+    this.activatedPhotos = JSON.parse(localStorage.getItem('activatedPhotos'));
+    if (this.activatedPhotos){
+      this.activatedPhotos.forEach(el => this.activatedPhotosId.push(el.id));
+    } else {
+      this.activatedPhotosId = [];
+    }
   }
 
   ngOnDestroy(): void {
@@ -43,7 +51,23 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   }
 
   activatePhoto(photo): void {
-    console.log(photo);
+    this.activatedPhotos = JSON.parse(localStorage.getItem('activatedPhotos'));
+    if (this.activatedPhotos){
+      this.activatedPhotos.push(photo);
+      localStorage.setItem('activatedPhotos', JSON.stringify(this.activatedPhotos));
+    } else {
+      const photos = [];
+      photos[0] = photo;
+      localStorage.setItem('activatedPhotos', JSON.stringify(photos));
+    }
+    this.activatedPhotosId.push(photo.id);
+  }
+
+  deactivatePhoto(photo): void {
+    this.activatedPhotos = JSON.parse(localStorage.getItem('activatedPhotos'));
+    this.activatedPhotos = this.activatedPhotos.filter((f) => f.id !== photo.id);
+    localStorage.setItem('activatedPhotos', JSON.stringify(this.activatedPhotos));
+    this.activatedPhotosId = this.activatedPhotosId.filter((f) => f !== photo.id);
   }
 
 }

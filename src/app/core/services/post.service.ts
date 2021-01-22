@@ -13,9 +13,6 @@ export class PostService {
   constructor( private http: HttpClient) { }
 
   getPostList(): Observable<PostModel[]>{
-    return this.http.get<PostModel[]>(  `https://jsonplaceholder.typicode.com/posts`)
-      .pipe(
-        map( data => data.slice(0, 10)
-      ));
+    return this.http.get<PostModel[]>(  `https://jsonplaceholder.typicode.com/posts?_start=0&_limit=10`);
   }
 }

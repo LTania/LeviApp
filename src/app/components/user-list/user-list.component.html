@@ -28,7 +28,8 @@
   <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef> Action </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="activateUser(element)">Activate</button>
+      <button mat-raised-button (click)="activateUser(element)" *ngIf="!activatedUsersId.includes(element.id)">Activate</button>
+      <button mat-raised-button (click)="deactivateUser(element)" *ngIf="activatedUsersId.includes(element.id)">Deactivate</button>
     </td>
   </ng-container>
 

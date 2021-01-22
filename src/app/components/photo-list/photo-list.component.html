@@ -8,7 +8,8 @@
   <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef> Action </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="activatePhoto(element)">Activate</button>
+      <button mat-raised-button (click)="activatePhoto(element)" *ngIf="!activatedPhotosId.includes(element.id)">Activate</button>
+      <button mat-raised-button (click)="deactivatePhoto(element)" *ngIf="activatedPhotosId.includes(element.id)">Deactivate </button>
     </td>
   </ng-container>
 

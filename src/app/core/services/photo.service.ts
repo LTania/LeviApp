@@ -12,9 +12,6 @@ export class PhotoService {
   constructor(private http: HttpClient) { }
 
   getPhotoList(): Observable<PhotoModel[]>{
-    return this.http.get<PhotoModel[]>(  `https://jsonplaceholder.typicode.com/photos`)
-      .pipe(
-        map( data => data.slice(0, 10)
-        ));
+    return this.http.get<PhotoModel[]>(  `https://jsonplaceholder.typicode.com/photos?_start=0&_limit=10`);
   }
 }
