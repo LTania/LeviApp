@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { PostService } from '../../core/services/post.service';
+import { PostService } from '../../../core/services/post.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 

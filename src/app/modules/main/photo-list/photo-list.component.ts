@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
-import { PhotoService } from '../../core/services/photo.service';
+import { PhotoService } from '../../../core/services/photo.service';
 import { takeUntil } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PhotoModel } from '../../core/models/photo.model';
+import { PhotoModel } from '../../../core/models/photo.model';
 
 @Component({
   selector: 'app-photo-list',

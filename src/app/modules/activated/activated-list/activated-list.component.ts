@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { PhotoModel } from '../../core/models/photo.model';
+import { PhotoModel } from '../../../core/models/photo.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
