@@ -37,8 +37,8 @@ export class PhotoListComponent implements OnInit, OnDestroy {
         },
         err => console.log(err)
       );
-    this.activatedPhotos = JSON.parse(localStorage.getItem('activatedPhotos'));
-    if (this.activatedPhotos){
+    this.activatedPhotos = this.facadeService.getActivatedPhotoList();
+    if (this.activatedPhotos.length !== 0){
       this.activatedPhotos.forEach(el => this.activatedPhotosId.push(el.id));
     } else {
       this.activatedPhotosId = [];
@@ -51,24 +51,13 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   }
 
   activatePhoto(photo): void {
-    this.activatedPhotos = JSON.parse(localStorage.getItem('activatedPhotos'));
-    if (this.activatedPhotos){
-      this.activatedPhotos.push(photo);
-      localStorage.setItem('activatedPhotos', JSON.stringify(this.activatedPhotos));
-    } else {
-      const photos = [];
-      photos[0] = photo;
-      localStorage.setItem('activatedPhotos', JSON.stringify(photos));
-    }
+    this.facadeService.activatePhoto(photo);
     this.activatedPhotosId.push(photo.id);
   }
 
   deactivatePhoto(photo): void {
-    this.activatedPhotos = JSON.parse(localStorage.getItem('activatedPhotos'));
-    this.activatedPhotos = this.activatedPhotos.filter((f) => f.id !== photo.id);
-    localStorage.setItem('activatedPhotos', JSON.stringify(this.activatedPhotos));
+    this.facadeService.deactivatePhoto(photo);
     this.activatedPhotosId = this.activatedPhotosId.filter((f) => f !== photo.id);
   }
-
 }
 

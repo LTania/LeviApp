@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PhotoModel } from '../../../core/models/photo.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FacadeService } from '../../../core/services/facade.service';
 
 @Component({
   selector: 'app-activated-list',
@@ -27,10 +28,10 @@ export class ActivatedListComponent implements OnInit {
   photosDisplayedColumns: string[] = ['title'];
   expandedPhotoElement: PhotoModel | null;
 
-  constructor() { }
+  constructor(private facadeService: FacadeService) { }
 
   ngOnInit(): void {
-    const posts = JSON.parse(localStorage.getItem('activatedPosts'));
+    const posts = this.facadeService.getActivatedPostList();
     if (posts && posts.length !== 0){
       this.postsSource = new MatTableDataSource(posts);
       this.isPosts = true;
@@ -39,7 +40,7 @@ export class ActivatedListComponent implements OnInit {
       this.isPosts = false;
     }
 
-    const photos = JSON.parse(localStorage.getItem('activatedPhotos'));
+    const photos = this.facadeService.getActivatedPhotoList();
     if (photos && photos.length !== 0){
       this.photosSource = new MatTableDataSource(photos);
       this.isPhotos = true;
@@ -48,7 +49,7 @@ export class ActivatedListComponent implements OnInit {
       this.isPhotos = false;
     }
 
-    const users = JSON.parse(localStorage.getItem('activatedUsers'));
+    const users = this.facadeService.getActivatedUserList();
     if (users && users.length !== 0){
       this.usersSource = new MatTableDataSource(users);
       this.isUsers = true;

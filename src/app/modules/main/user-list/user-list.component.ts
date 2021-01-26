@@ -9,7 +9,7 @@ import { FacadeService } from '../../../core/services/facade.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.sass']
 })
-export class UserListComponent implements OnInit, OnDestroy{
+export class UserListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<unknown>;
   displayedColumns: string[] = ['name', 'username', 'email', 'phone', 'company', 'action'];
   activatedUsers = [];
@@ -27,8 +27,8 @@ export class UserListComponent implements OnInit, OnDestroy{
         },
         err => console.log(err)
       );
-    this.activatedUsers = JSON.parse(localStorage.getItem('activatedUsers'));
-    if (this.activatedUsers){
+    this.activatedUsers = this.facadeService.getActivatedUserList();
+    if (this.activatedUsers.length !== 0){
       this.activatedUsers.forEach(el => this.activatedUsersId.push(el.id));
     } else {
       this.activatedUsersId = [];
@@ -41,22 +41,12 @@ export class UserListComponent implements OnInit, OnDestroy{
   }
 
   activateUser(user): void{
-    this.activatedUsers = JSON.parse(localStorage.getItem('activatedUsers'));
-    if (this.activatedUsers){
-      this.activatedUsers.push(user);
-      localStorage.setItem('activatedUsers', JSON.stringify(this.activatedUsers));
-    } else {
-      const users = [];
-      users[0] = user;
-      localStorage.setItem('activatedUsers', JSON.stringify(users));
-    }
+    this.facadeService.activateUser(user);
     this.activatedUsersId.push(user.id);
   }
 
   deactivateUser(user): void {
-    this.activatedUsers = JSON.parse(localStorage.getItem('activatedUsers'));
-    this.activatedUsers = this.activatedUsers.filter((f) => f.id !== user.id);
-    localStorage.setItem('activatedUsers', JSON.stringify(this.activatedUsers));
+    this.facadeService.deactivateUser(user);
     this.activatedUsersId = this.activatedUsersId.filter((f) => f !== user.id);
   }
 }

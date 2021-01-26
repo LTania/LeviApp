@@ -27,11 +27,11 @@ export class PostListComponent implements OnInit, OnDestroy {
         },
         err => console.log(err)
         );
-    this.activatedPosts = JSON.parse(localStorage.getItem('activatedPosts'));
-    if (this.activatedPosts){
+    this.activatedPosts = this.facadeService.getActivatedPostList();
+    if (this.activatedPosts.length !== 0){
       this.activatedPosts.forEach(el => this.activatedPostsId.push(el.id));
     } else {
-      this.activatedPosts = [];
+      this.activatedPostsId = [];
     }
   }
 
@@ -41,22 +41,12 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   activatePost(post): void{
-    this.activatedPosts = JSON.parse(localStorage.getItem('activatedPosts'));
-    if (this.activatedPosts){
-      this.activatedPosts.push(post);
-      localStorage.setItem('activatedPosts', JSON.stringify(this.activatedPosts));
-    } else {
-      const posts = [];
-      posts[0] = post;
-      localStorage.setItem('activatedPosts', JSON.stringify(posts));
-    }
+    this.facadeService.activatePost(post);
     this.activatedPostsId.push(post.id);
   }
 
   deactivatePost(post): void {
-    this.activatedPosts = JSON.parse(localStorage.getItem('activatedPosts'));
-    this.activatedPosts = this.activatedPosts.filter((f) => f.id !== post.id);
-    localStorage.setItem('activatedPosts', JSON.stringify(this.activatedPosts));
+    this.facadeService.deactivatePost(post);
     this.activatedPostsId = this.activatedPostsId.filter((f) => f !== post.id);
   }
 }

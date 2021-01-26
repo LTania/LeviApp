@@ -27,8 +27,7 @@ import { FacadeService } from '../core/services/facade.service';
   providers: [
     UserService,
     PhotoService,
-    PostService,
-    FacadeService
+    PostService
   ]
 })
 export class SharedModule { }
