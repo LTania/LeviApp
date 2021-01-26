@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { PostService } from '../../../core/services/post.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { FacadeService } from '../../../core/services/facade.service';
 
 @Component({
   selector: 'app-post-list',
@@ -16,10 +16,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   activatedPostsId = [];
   private destroy$ = new Subject();
 
-  constructor(private postService: PostService) { }
+  constructor(private facadeService: FacadeService) { }
 
   ngOnInit(): void {
-    this.postService.getPostList()
+    this.facadeService.getPostList()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {

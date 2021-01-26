@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UserService } from '../../../core/services/user.service';
+import { FacadeService } from '../../../core/services/facade.service';
 
 @Component({
   selector: 'app-user-list',
@@ -16,10 +16,10 @@ export class UserListComponent implements OnInit, OnDestroy{
   activatedUsersId = [];
   private destroy$ = new Subject();
 
-  constructor(private userService: UserService) { }
+  constructor(private facadeService: FacadeService) { }
 
   ngOnInit(): void {
-    this.userService.getUserList()
+    this.facadeService.getUserList()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {

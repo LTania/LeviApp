@@ -2,12 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PostModel } from '../models/post.model';
-import { map } from 'rxjs/operators';
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PostService {
 
   constructor( private http: HttpClient) { }

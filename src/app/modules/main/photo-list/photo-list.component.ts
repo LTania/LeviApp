@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
-import { PhotoService } from '../../../core/services/photo.service';
 import { takeUntil } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PhotoModel } from '../../../core/models/photo.model';
+import { FacadeService } from '../../../core/services/facade.service';
 
 @Component({
   selector: 'app-photo-list',
@@ -26,10 +26,10 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   activatedPhotosId = [];
   private destroy$ = new Subject();
 
-  constructor(private photoService: PhotoService) {}
+  constructor(private facadeService: FacadeService) {}
 
   ngOnInit(): void {
-    this.photoService.getPhotoList()
+    this.facadeService.getPhotoList()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {

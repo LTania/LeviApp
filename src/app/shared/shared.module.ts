@@ -6,7 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-
+import { PhotoService } from '../core/services/photo.service';
+import { PostService } from '../core/services/post.service';
+import { UserService } from '../core/services/user.service';
+import { FacadeService } from '../core/services/facade.service';
 
 @NgModule({
   declarations: [],
@@ -20,6 +23,12 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatSidenavModule,
     MatToolbarModule
+  ],
+  providers: [
+    UserService,
+    PhotoService,
+    PostService,
+    FacadeService
   ]
 })
 export class SharedModule { }
